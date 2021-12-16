@@ -18,6 +18,7 @@ class MazeNode{
 	int x = 0;
 	int y = 0;
 	int thread = -1;
+	int totalThreads = 0;
 
 	public MazeNode(String desc, ColorEnum color, int x, int y){
 		this.desc = desc;
@@ -31,6 +32,7 @@ public class Visualizer extends Canvas{
 	int rows;
 	int columns;
 	int width = 10;
+	int totalThreads = -1;
 
 	public Visualizer(String mazePath, int width){
 		this.width = width;
@@ -93,7 +95,8 @@ public class Visualizer extends Canvas{
 					g.fillRect(maze[i][j].x + xOff, maze[i][j].y + yOff, width , width);
 				}
 				if(maze[i][j].color == ColorEnum.RED && !maze[i][j].desc.equals("g")){
-					java.awt.Color myColor = new java.awt.Color(255, 0, 0);
+					// Color opaqueness is dependent on number of threads. Less threads means less opaque color
+					java.awt.Color myColor = new java.awt.Color(255, 200 - (int)Math.round((double) maze[i][j].totalThreads/totalThreads * 200), 200 - (int)Math.round((double) maze[i][j].totalThreads/totalThreads * 200));
 					g.setColor(myColor);
 					g.fillRect(maze[i][j].x + xOff, maze[i][j].y + yOff, width , width);
 				}
@@ -123,6 +126,7 @@ public class Visualizer extends Canvas{
 				paths.add(path);				
 			}
 
+			totalThreads = paths.size();
 
 			int globalIndex = 0;
 			boolean noMoreThreads = false;
@@ -140,6 +144,7 @@ public class Visualizer extends Canvas{
 						
 						maze[row][column].color = ColorEnum.RED;
 						maze[row][column].thread = currentThread;
+						maze[row][column].totalThreads++;
 						
 						repaint();
 					}
