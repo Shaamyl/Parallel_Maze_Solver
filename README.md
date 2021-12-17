@@ -5,9 +5,11 @@ Use mkdir build and then cd build
 Inside the build directory run cmake .. to generate a makefile
 Running the code is pretty simple, either have the maze file in the build directory or have its path copied
 Assuming that the maze file is in the build directory. The code can be ran as follows:
+
 ./solve  maze.txt
 
 You can also run rand.cu to test out the CUDA random number generator by running:
+
 ./rand
 
 The path will be outputted to an output.txt which will be inside the build directory.
