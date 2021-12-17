@@ -100,6 +100,7 @@ __global__ void random_solve_path_kernel(char* maze, int rows, int cols, int sta
             curr_pos = legal_movesarr[int(rand_val)];
             path[curr_pos + (rows * cols * tid)] = old_pos;
             final_pos[tid] = curr_pos;
+	    //Goal found, set solved value to true to signal to all the other the threads that the maze has been solved
             if(maze[curr_pos] == 'g'){
                 *solved = true;
             }
